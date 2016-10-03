@@ -1,0 +1,41 @@
+{
+  "name": "tcss",
+  "version": "1.0.0",
+  "description": "Minimalistic test framework for css files",
+  "keywords": [
+    "css",
+    "test",
+    "test css"
+  ],
+  "engines": {
+    "node": ">=6.3"
+  },
+  "main": "lib/harness.js",
+  "bin": "./bin/tcss.js",
+  "scripts": {
+    "test": "npm run test:unit && npm run test:css",
+    "test:css": "node bin/tcss -x ./test/xform test/case-equal test/case-xform",
+    "test:unit": "tape test/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sullenor/tcss.git"
+  },
+  "author": "Alexey Litvinov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sullenor/tcss/issues"
+  },
+  "homepage": "https://github.com/sullenor/tcss#readme",
+  "devDependencies": {
+    "eslint": "^3.7.1",
+    "spy": "^0.1.3",
+    "tape": "^4.6.0"
+  },
+  "dependencies": {
+    "glob": "^7.1.0",
+    "minimist": "^1.2.0",
+    "promisify-api": "^1.1.1",
+    "resolve": "^1.1.7"
+  }
+}
