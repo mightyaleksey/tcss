@@ -2,19 +2,27 @@
 
 const {
   assign,
+  castArray,
   compose,
   constant,
   curry,
   filter,
+  first,
   groupBy,
   identity,
+  invert,
+  isArray,
+  isString,
+  isUndefined,
   map,
+  negate,
+  omit,
   prop,
   reduce,
 } = require('../../lib/dash');
 const test = require('tape');
 
-const add = curry((a, b) => a + b);
+const add = curry((a, b, c = 0) => a + b + c);
 const inc = add(1);
 
 test('assign', t => {
@@ -28,8 +36,13 @@ test('assign', t => {
   t.end();
 });
 
-test('filter', t => {
-  t.deepEqual(filter(Math.round)([0, 0.3, 1, 0.5]), [1, 0.5]);
+test('castArray', t => {
+  const a = [];
+  t.equal(castArray(a), a);
+  t.notEqual(castArray([5]), [5]);
+  t.deepEqual(castArray(void 0), [void 0]);
+  t.deepEqual(castArray(null), [null]);
+  t.deepEqual(castArray(), []);
   t.end();
 });
 
@@ -59,6 +72,18 @@ test('curry', t => {
   t.end();
 });
 
+test('filter', t => {
+  const a = [0, 1, null, 2, 3];
+  t.notEqual(filter(Boolean, a), a);
+  t.deepEqual(filter(Boolean, a), [1, 2, 3]);
+  t.end();
+});
+
+test('first', t => {
+  t.equal(first([5]), 5);
+  t.end();
+});
+
 test('groupBy', t => {
   t.deepEqual(groupBy(Math.round, [1, 3.2, 1.5, 2, 3]), {
     1: [1],
@@ -68,9 +93,44 @@ test('groupBy', t => {
   t.end();
 });
 
+test('invert', t => {
+  t.deepEqual(invert(['a', 'b']), {a: '0', b: '1'});
+  t.deepEqual(invert({a: 'b'}), {b: 'a'});
+  t.end();
+});
+
+test('isArray', t => {
+  t.ok(isArray([]));
+  t.notOk(isArray({}));
+  t.end();
+});
+
+test('isString', t => {
+  t.ok(isString(''));
+  t.notOk(isString(0));
+  t.end();
+});
+
+test('isUndefined', t => {
+  t.ok(isUndefined(void 0));
+  t.notOk(isUndefined(''));
+  t.end();
+});
+
 test('map', t => {
   t.deepEqual(map(inc, [1, 2, 3]), [2, 3, 4]);
   t.deepEqual(map(inc, {a: 1, b: 2, c: 3}), [2, 3, 4]);
+  t.end();
+});
+
+test('negate', t => {
+  t.ok(negate(constant())());
+  t.end();
+});
+
+test('omit', t => {
+  t.deepEqual(omit(['a', 'b'], {b: 3, c: 0, d: false}), {c: 0, d: false});
+  t.deepEqual(omit(['a', 'b'])({b: 3, c: 0, d: false}), {c: 0, d: false});
   t.end();
 });
 

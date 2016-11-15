@@ -3,12 +3,12 @@
 
 const {
   assign,
+  castArray,
   compose,
   filter,
   identity,
   map,
   reduce,
-  toArray,
   waitAll,
 } = require('../lib/dash');
 const harness = require('../lib/harness');
@@ -45,7 +45,7 @@ if (argv.help) {
 
 const resolveTo = filepath => resolve(filepath, {basedir: cwd});
 const requireModule = compose(require, resolveTo);
-const loadModules = compose(map(requireModule), filter(Boolean), toArray);
+const loadModules = compose(map(requireModule), filter(Boolean), castArray);
 
 loadModules(argv.require);
 
