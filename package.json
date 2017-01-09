@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/sullenor/tcss#readme",
   "devDependencies": {
-    "eslint": "^3.10.1",
+    "eslint": "^3.13.1",
     "spy": "^0.1.3",
     "tape": "^4.6.0"
   },
